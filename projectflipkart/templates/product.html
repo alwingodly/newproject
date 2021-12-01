@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block metadescription  %}
+{{ category.description|truncatewords:155 }}
+welcome to flipkart
+{% endblock %}
+{% block title %}
+{% if p %}
+{{ product.name }}
+{% endif %}
+{% endblock %}
+<!--block content-->
+{% block content %}
+<div xmlns="http://www.w3.org/1999/html">
+<div>
+    <div>
+        <p ><a href="{% url 'flipkartapp:flipkart' %}" >Home</a>|<a href="{{ p.get_url }}">{{p.category}}|</a>{{p.name}}</p>
+    </div>
+</div>
+    <h3 class="text-center container" style="text-transform:uppercase">{{ p.name }}</h3>
+</div>
+<div class="container">
+<div class="row mt-5">
+<div class=" col-md-4 col-12">
+    <img src="{{p.image.url}}" class="card-img-top" alt="{{p.name}}"></div>
+    <div class="col-12 col-md-8">
+    <h3 style="color:red">{{p.price}}₹</h3>
+      <h5 class="text-center">Product About & Description</h5>
+    <p>{{p.descr}}</p>
+        <h5 style="color:green">Stock: {{p.stock}}</h5></div>
+        <div class="d-flex justify-content-center mt-3 mb-5">
+      {% if p.stock <= 0 %}
+    <h3 style="color:red;">out of stock</h3>
+    {% else %}
+    <a href="{% url 'cartapp:add_cart' p.id %}" class="btn btn-warning ">Add to cart</a>
+      {% endif %}
+        </div></div></div>
+
+{% endblock %}

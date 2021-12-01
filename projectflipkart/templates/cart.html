@@ -1,0 +1,105 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block metadescription  %}
+Your Cart
+{% endblock %}
+{% block title %}
+Cart
+{% endblock %}
+{% block content %}
+{% if not cart_item %}
+<div>
+    <div class="text-center">
+        <br>
+        <h1 class="text-center my_title">
+            Your Shopping Cart is empty
+        </h1>
+        <br>
+        <p class="text-center">
+            Please Click<a href="{% url 'flipkartapp:flipkart' %}"> Here</a> Continue shopping
+        </p>
+    </div>
+</div>
+{% else %}
+<div class="container">
+    <div class="text-center my_title">
+        <br>
+        <h2 class="text-center my_title">YOUR SHOPPING CART</h2>
+        <br>
+    </div>
+    <div class="row mx-auto">
+        <div class="d-flex justify-content-center" >
+        <div class="text-center col-md-8 " >
+            <table class="table my_costum_table" style=" font-size:14px; ">
+                <thead class="my_custom_thead" style="font-weight:normal; text-transform:uppercase">
+                <tr>
+                    <th colspan="5">
+                        Your Items
+                    </th>
+                </tr>
+                </thead>
+                {% endif %}
+                <tbody>
+                {% for cart_item in cart_item %}
+                <tr>
+                    <td>
+                        <a href="cart_item.product.get_absolute url"><img style="width:200px" src="{{ cart_item.product.image.url }}"></a>
+                    </td>
+                    <td class="text-left">
+                        {{cart_item.product.name}}
+                        <br>
+                        SKU: {{cart_item_product.id}}
+                        <br>
+                        price:{{cart_item.product.price}}
+                        <br>
+                        Qty:{{cart_item.quantity}}x{{cart_item}}
+                    </td>
+                    <td>
+                        {{cart_item.sub_total}}
+                    </td>
+                    {% if cart_item.quantity < cart_item.product.stock %}
+                    <td>
+                        <a href="{% url 'cartapp:add_cart' cart_item.product.id %}" class="coustom_a"><i class="bi bi-plus-circle-fill"></i></a>&nbsp;
+                        <a href="{% url 'cartapp:cart_remove' cart_item.product.id %}" class="coustom_icon"><i class="bi bi-dash-circle-fill"></i></a>
+                        <a href="{% url 'cartapp:full_remove' cart_item.product.id %}" class="coustom_a"><i class="bi bi-trash-fill"></i></a>
+                    </td>
+                    {% else %}
+                     <td>
+                      <a href="{% url 'cartapp:cart_remove' cart_item.product.id %}" class="coustom_icon"><i class="bi bi-dash-circle-fill"></i></a>&nbsp;
+
+                       <a href="{% url 'cartapp:full_remove' cart_item.product.id %}" class="coustom_icon"><i class="bi bi-trash-fill"></i></a>
+                     </td>
+                </tr>
+                 {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div></div></div>
+        <div class="container">
+        <div class=" col-12">
+                <table class="table my custom_table">
+                    <thead class="table my custom_thead">
+<!--                    <tr>-->
+<!--                        <th>-->
+<!--                            Checkout-->
+<!--                        </th>-->
+<!--                    </tr>-->
+                    </thead>
+                    <tbody>
+<!--                    <tr>-->
+<!--                        <td>-->
+<!--                            Please review your shopping cart items before proceeding with the oder payment-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                    </tbody>
+                </table>
+                <div class="row mx-auto">
+                    <a href="{% url 'flipkartapp:flipkart' %}" class="btn btn-secondary btn_block my_custom_btn" style="text-decoration:none">
+                      Continue shopping
+                    </a>
+                </div>
+
+        </div></div>
+
+    </div><br><br>
+{% endblock %}

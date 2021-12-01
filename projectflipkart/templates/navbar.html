@@ -1,0 +1,40 @@
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'flipkartapp:flipkart' %}" style="text-decoration: none;color:white;">Home</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if item_count > 0 %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'cartapp:cart_detail' %}"><h4 style="color:white"><i class="bi bi-cart-plus-fill"></i>({{ item_count }})</h4> </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'cartapp:cart_detail' %}"><h4 style="color:white"><i class="bi bi-cart-plus-fill"></i>(0)</h4> </a>
+        </li>
+        {% endif %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:white; font-size:20px">
+            Shop
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+            {% for c in links %}
+            <li><a class="dropdown-item"  href="{{ c.get_url }}"> {{c.name}}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+
+      </ul>
+      <form class="d-flex" action="{% url 'searchapp:search' %}" method="get">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
+        <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+    </div>
+  </div>
+</nav>
